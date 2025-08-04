@@ -8,33 +8,43 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* Raízes App Design System - Cores baseadas no briefing */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 184 44% 20%; /* #2c6b6b mais escuro para texto */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 184 44% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 184 44% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Cores principais do app */
+    --primary: 184 44% 29%; /* #2c6b6b - Verde escuro principal */
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 169 51% 51%; /* #4ac1a7 - Verde claro */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 169 51% 51%; /* #4ac1a7 */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 184 20% 95%;
+    --muted-foreground: 184 10% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 169 51% 96%; /* Verde muito claro para fundos */
+    --accent-foreground: 184 44% 20%;
+
+    /* Cores de apoio */
+    --success: 142 69% 58%; /* Verde para conquistas */
+    --success-foreground: 0 0% 100%;
+
+    --warning: 43 89% 70%; /* Amarelo suave */
+    --warning-foreground: 184 44% 20%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 184 20% 90%;
+    --input: 184 20% 95%;
+    --ring: 184 44% 29%;
 
     --radius: 0.5rem;
 
@@ -56,33 +66,40 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 184 44% 4%;
+    --foreground: 0 0% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 184 44% 6%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 184 44% 6%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 169 51% 51%; /* Verde claro no dark mode */
+    --primary-foreground: 184 44% 4%;
+    --primary-light: 169 51% 60%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 184 44% 15%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 184 20% 10%;
+    --muted-foreground: 184 10% 70%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 184 44% 8%;
+    --accent-foreground: 0 0% 98%;
+
+    --success: 142 69% 58%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 43 89% 70%;
+    --warning-foreground: 184 44% 20%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 184 20% 20%;
+    --input: 184 20% 15%;
+    --ring: 169 51% 51%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -100,6 +117,28 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
+  }
+
+  /* Gradientes e efeitos especiais */
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  }
+
+  .gradient-card {
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--background)));
+  }
+
+  .shadow-soft {
+    box-shadow: 0 4px 20px -4px hsl(var(--primary) / 0.1);
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 30px hsl(var(--secondary) / 0.2);
+  }
+
+  /* Animações suaves */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
