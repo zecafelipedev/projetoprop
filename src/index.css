@@ -8,45 +8,44 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Raízes App Design System - Cores baseadas no briefing */
-    --background: 0 0% 100%;
-    --foreground: 184 44% 20%; /* #2c6b6b mais escuro para texto */
+    /* Raízes App Design System - Cores do briefing */
+    --background: 0 0% 100%; /* #ffffff - Branco como fundo */
+    --foreground: 233 82% 18%; /* #1a237e - Azul escuro para textos */
 
-    --card: 0 0% 100%;
-    --card-foreground: 184 44% 20%;
+    --card: 0 0% 96%; /* #f5f5f5 - Cinza claro para separação de cards */
+    --card-foreground: 233 82% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 184 44% 20%;
+    --popover-foreground: 233 82% 18%;
 
-    /* Cores principais do app */
-    --primary: 184 44% 29%; /* #2c6b6b - Verde escuro principal */
+    /* Cores principais do app conforme briefing */
+    --primary: 26 100% 50%; /* #ff6d00 - Laranja para botões principais */
     --primary-foreground: 0 0% 100%;
-    --primary-light: 169 51% 51%; /* #4ac1a7 - Verde claro */
-
-    --secondary: 169 51% 51%; /* #4ac1a7 */
+    
+    --secondary: 233 82% 18%; /* #1a237e - Azul escuro para títulos e botões alternativos */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 184 20% 95%;
-    --muted-foreground: 184 10% 55%;
+    --muted: 0 0% 96%; /* #f5f5f5 */
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 169 51% 96%; /* Verde muito claro para fundos */
-    --accent-foreground: 184 44% 20%;
+    --accent: 0 0% 96%; /* #f5f5f5 - Cinza claro para fundos */
+    --accent-foreground: 233 82% 18%;
 
     /* Cores de apoio */
     --success: 142 69% 58%; /* Verde para conquistas */
     --success-foreground: 0 0% 100%;
 
     --warning: 43 89% 70%; /* Amarelo suave */
-    --warning-foreground: 184 44% 20%;
+    --warning-foreground: 233 82% 18%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 184 20% 90%;
-    --input: 184 20% 95%;
-    --ring: 184 44% 29%;
+    --border: 0 0% 90%;
+    --input: 0 0% 96%;
+    --ring: 26 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -117,7 +116,8 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-inter;
+    @apply bg-background text-foreground;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 
   /* Gradientes e efeitos especiais */
@@ -125,16 +125,16 @@ All colors MUST be HSL.
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
   }
 
-  .gradient-card {
-    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--background)));
+  .gradient-hero {
+    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary)));
+  }
+
+  .shadow-card {
+    box-shadow: 0 2px 8px hsl(var(--foreground) / 0.1);
   }
 
   .shadow-soft {
-    box-shadow: 0 4px 20px -4px hsl(var(--primary) / 0.1);
-  }
-
-  .shadow-glow {
-    box-shadow: 0 0 30px hsl(var(--secondary) / 0.2);
+    box-shadow: 0 4px 20px -4px hsl(var(--primary) / 0.15);
   }
 
   /* Animações suaves */

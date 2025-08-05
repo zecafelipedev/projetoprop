@@ -8,6 +8,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Devocional from "./pages/Devocional";
+import Oracao from "./pages/Oracao";
+import Checkin from "./pages/Checkin";
+import AgendaDiscipulos from "./pages/AgendaDiscipulos";
 import Diario from "./pages/Diario";
 import Trilhas from "./pages/Trilhas";
 import Profile from "./pages/Profile";
@@ -27,6 +30,9 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/devocional" element={<Devocional />} />
+          <Route path="/oracao" element={<Oracao />} />
+          <Route path="/checkin" element={<Checkin />} />
+          <Route path="/agenda-discipulos" element={<AgendaDiscipulos />} />
           <Route path="/diario" element={<Diario />} />
           <Route path="/trilhas" element={<Trilhas />} />
           <Route path="/profile" element={<Profile />} />

@@ -1,150 +1,118 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Navigation } from "@/components/Navigation";
+import { Book, CheckCircle, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, CheckCircle, BookOpen, Share2 } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Devocional = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [isCompleted, setIsCompleted] = useState(false);
 
   const handleMarkComplete = () => {
     setIsCompleted(true);
-    // Aqui salvaria o progresso no backend
+    toast({
+      title: "Devocional concluído!",
+      description: "Parabéns por dedicar tempo à Palavra de Deus.",
+    });
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <div className="bg-white border-b border-border p-4">
-        <div className="flex items-center gap-3 max-w-4xl mx-auto">
-          <Button variant="ghost" size="icon" onClick={() => navigate('/dashboard')}>
+      <div className="bg-secondary text-secondary-foreground p-6">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/dashboard')}
+            className="text-secondary-foreground hover:bg-white/20"
+          >
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-lg font-semibold text-foreground">Devocional do Dia</h1>
-          <Button variant="ghost" size="icon" className="ml-auto">
-            <Share2 className="w-5 h-5" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Book className="w-6 h-6" />
+            <h1 className="text-xl font-bold">Devocional do Dia</h1>
+          </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-2xl mx-auto p-6 space-y-6">
-        
-        {/* Título e Versículo */}
-        <Card className="shadow-soft border-0">
-          <CardHeader className="text-center space-y-4 pb-6">
-            <div className="w-16 h-16 mx-auto rounded-full gradient-primary flex items-center justify-center">
-              <BookOpen className="w-8 h-8 text-white" />
-            </div>
-            <div className="space-y-2">
-              <CardTitle className="text-2xl text-primary">
-                Deus tem um plano para você
-              </CardTitle>
-              <p className="text-primary font-medium">15 de Dezembro, 2024</p>
-            </div>
-          </CardHeader>
-        </Card>
-
-        {/* Versículo Principal */}
-        <Card className="shadow-soft border-0 gradient-card">
-          <CardContent className="p-6 text-center space-y-4">
-            <p className="text-lg font-medium text-foreground leading-relaxed">
-              "Porque sou eu que conheço os planos que tenho para vocês", 
-              diz o Senhor, "planos de fazê-los prosperar e não de 
-              causar dano, planos de dar esperança e um futuro."
-            </p>
-            <p className="text-primary font-semibold">
-              Jeremias 29:11 (NVI)
-            </p>
-          </CardContent>
-        </Card>
-
+      <div className="p-4 space-y-6">
         {/* Leitura Bíblica */}
-        <Card className="shadow-soft border-0">
+        <Card className="border-primary/20">
           <CardHeader>
-            <CardTitle className="text-lg text-primary">Leitura Bíblica</CardTitle>
+            <CardTitle className="text-lg text-primary">João 15:1-8</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-foreground leading-relaxed">
-              <strong>Jeremias 29:10-14</strong>
-            </p>
-            <p className="text-foreground leading-relaxed">
-              Assim diz o Senhor: "Quando se completarem os setenta anos da Babilônia, 
-              eu cuidarei de vocês e cumprirei a minha promessa de trazê-los de volta 
-              para este lugar. Porque sou eu que conheço os planos que tenho para vocês", 
-              diz o Senhor, "planos de fazê-los prosperar e não de causar dano, planos 
-              de dar esperança e um futuro. Então vocês clamarão a mim, virão orar a mim, 
-              e eu os ouvirei. Vocês me procurarão e me acharão quando me procurarem de 
-              todo o coração. Eu me deixarei ser encontrado por vocês", declara o Senhor.
-            </p>
+            <div className="text-sm leading-relaxed text-foreground">
+              <p className="mb-3">
+                <strong>1</strong> "Eu sou a videira verdadeira, e meu Pai é o agricultor. 
+                <strong> 2</strong> Todo ramo que, estando em mim, não dá fruto, ele corta; 
+                e todo que dá fruto ele poda, para que dê mais fruto ainda.
+              </p>
+              <p className="mb-3">
+                <strong>3</strong> Vocês já estão limpos, pela palavra que lhes tenho falado. 
+                <strong> 4</strong> Permaneçam em mim, e eu permanecerei em vocês. Nenhum ramo 
+                pode dar fruto por si mesmo, se não permanecer na videira. Vocês também não 
+                podem dar fruto, se não permanecerem em mim.
+              </p>
+              <p>
+                <strong>5</strong> "Eu sou a videira; vocês são os ramos. Se alguém permanecer 
+                em mim e eu nele, esse dá muito fruto; pois sem mim vocês não podem fazer coisa alguma."
+              </p>
+            </div>
           </CardContent>
         </Card>
 
         {/* Reflexão */}
-        <Card className="shadow-soft border-0">
+        <Card>
           <CardHeader>
-            <CardTitle className="text-lg text-primary">Reflexão</CardTitle>
+            <CardTitle className="text-lg">Reflexão</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent>
             <p className="text-foreground leading-relaxed">
-              Às vezes, quando estamos passando por dificuldades, pode parecer que Deus 
-              se esqueceu de nós. O povo de Israel estava em cativeiro na Babilônia, 
-              longe de casa, e provavelmente se sentia abandonado.
+              Jesus se apresenta como a videira verdadeira, e nós somos os ramos. 
+              Esta metáfora nos ensina sobre a importância de permanecermos conectados 
+              a Cristo para produzirmos fruto espiritual.
             </p>
-            <p className="text-foreground leading-relaxed">
-              Mas Deus deixa claro: Ele tem planos para nós. Não são planos para nos 
-              prejudicar, mas para nos fazer prosperar. Ele quer nos dar esperança e 
-              um futuro.
+            <p className="text-foreground leading-relaxed mt-3">
+              Assim como um ramo precisa estar ligado à videira para receber nutrição 
+              e vida, nós precisamos manter nossa comunhão com Jesus através da oração, 
+              leitura da Palavra e obediência a Seus ensinamentos.
             </p>
-            <p className="text-foreground leading-relaxed">
-              Hoje, lembre-se: independente da situação que você está vivendo, Deus 
-              tem um plano maravilhoso para sua vida. Confie nEle!
-            </p>
+            <div className="mt-4 p-4 bg-accent rounded-lg">
+              <p className="text-sm text-muted-foreground italic">
+                "Pergunta para reflexão: Como posso permanecer mais conectado(a) 
+                a Jesus hoje? Que frutos Ele quer produzir através da minha vida?"
+              </p>
+            </div>
           </CardContent>
         </Card>
 
-        {/* Pergunta para Reflexão */}
-        <Card className="shadow-soft border-0 bg-accent">
-          <CardContent className="p-6">
-            <h3 className="font-semibold text-primary mb-3">Para Refletir:</h3>
-            <p className="text-foreground leading-relaxed">
-              Em que área da sua vida você precisa confiar mais nos planos de Deus? 
-              Como você pode buscar a Deus de todo o coração hoje?
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Botão de Conclusão */}
-        <div className="pt-4">
+        {/* Botão de conclusão */}
+        <Button
+          onClick={handleMarkComplete}
+          disabled={isCompleted}
+          className={`w-full h-12 text-base font-medium ${
+            isCompleted 
+              ? "bg-success text-success-foreground" 
+              : "bg-primary hover:bg-primary/90 text-primary-foreground"
+          }`}
+        >
           {isCompleted ? (
-            <Card className="bg-success/10 border-success">
-              <CardContent className="p-4 text-center">
-                <CheckCircle className="w-8 h-8 text-success mx-auto mb-2" />
-                <p className="text-success font-medium">Devocional concluído! 🎉</p>
-                <p className="text-sm text-success/80 mt-1">Continue crescendo na fé!</p>
-              </CardContent>
-            </Card>
-          ) : (
-            <Button 
-              className="w-full h-12 text-base"
-              onClick={handleMarkComplete}
-            >
+            <>
               <CheckCircle className="w-5 h-5 mr-2" />
-              Marcar como feito
-            </Button>
+              Devocional Concluído
+            </>
+          ) : (
+            "Marcar como Feito"
           )}
-        </div>
-
-        <div className="text-center pb-20">
-          <Button 
-            variant="outline" 
-            onClick={() => navigate('/dashboard')}
-          >
-            Voltar ao Dashboard
-          </Button>
-        </div>
+        </Button>
       </div>
+
+      <Navigation />
     </div>
   );
 };
