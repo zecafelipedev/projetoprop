@@ -11,6 +11,8 @@ import Devocional from "./pages/Devocional";
 import Oracao from "./pages/Oracao";
 import Checkin from "./pages/Checkin";
 import AgendaDiscipulos from "./pages/AgendaDiscipulos";
+import GestaoDiscipulos from "./pages/GestaoDiscipulos";
+import ReuniaoGrupo from "./pages/ReuniaoGrupo";
 import Diario from "./pages/Diario";
 import Trilhas from "./pages/Trilhas";
 import Profile from "./pages/Profile";
@@ -33,6 +35,8 @@ const App = () => (
           <Route path="/oracao" element={<Oracao />} />
           <Route path="/checkin" element={<Checkin />} />
           <Route path="/agenda-discipulos" element={<AgendaDiscipulos />} />
+          <Route path="/gestao-discipulos" element={<GestaoDiscipulos />} />
+          <Route path="/reuniao-grupo" element={<ReuniaoGrupo />} />
           <Route path="/diario" element={<Diario />} />
           <Route path="/trilhas" element={<Trilhas />} />
           <Route path="/profile" element={<Profile />} />

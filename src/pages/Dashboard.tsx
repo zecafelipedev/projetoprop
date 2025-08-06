@@ -2,11 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Navigation } from "@/components/Navigation";
 import { EventCard } from "@/components/EventCard";
 import { Button } from "@/components/ui/button";
-import { Star, Zap } from "lucide-react";
+import { Star, Zap, Users, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const userName = "João"; // Simulado - virá do Supabase
 
   const handleCheckin = () => {
@@ -92,16 +94,49 @@ const Dashboard = () => {
           <Button 
             variant="outline" 
             className="h-20 flex flex-col gap-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground"
+            onClick={() => navigate('/devocional')}
           >
             <Zap className="w-6 h-6" />
             <span className="text-sm">Devocional</span>
           </Button>
           <Button 
             className="h-20 flex flex-col gap-2 bg-primary hover:bg-primary/90 text-primary-foreground"
+            onClick={() => navigate('/oracao')}
           >
             <Star className="w-6 h-6" />
             <span className="text-sm">Oração</span>
           </Button>
+        </div>
+
+        {/* Gestão e Organização */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-foreground">Gestão</h2>
+          
+          <div className="grid grid-cols-1 gap-3">
+            <Button 
+              variant="outline"
+              className="h-16 flex items-center justify-start gap-3 px-4 border-orange-600/20 text-orange-600 hover:bg-orange-600 hover:text-white"
+              onClick={() => navigate('/gestao-discipulos')}
+            >
+              <Users className="w-5 h-5" />
+              <div className="text-left">
+                <div className="font-medium">Gestão de Discípulos</div>
+                <div className="text-sm opacity-80">Cadastrar e acompanhar discípulos</div>
+              </div>
+            </Button>
+            
+            <Button 
+              variant="outline"
+              className="h-16 flex items-center justify-start gap-3 px-4 border-blue-600/20 text-blue-600 hover:bg-blue-600 hover:text-white"
+              onClick={() => navigate('/reuniao-grupo')}
+            >
+              <Calendar className="w-5 h-5" />
+              <div className="text-left">
+                <div className="font-medium">Reuniões em Grupo</div>
+                <div className="text-sm opacity-80">Agendar e editar temas</div>
+              </div>
+            </Button>
+          </div>
         </div>
       </div>
 
