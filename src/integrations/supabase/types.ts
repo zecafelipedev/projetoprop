@@ -14,13 +14,283 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      discipleship_notes: {
+        Row: {
+          content: string
+          created_at: string | null
+          disciple_id: string
+          discipler_id: string
+          id: string
+          observations: string | null
+          prayer_requests: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          disciple_id: string
+          discipler_id: string
+          id?: string
+          observations?: string | null
+          prayer_requests?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          disciple_id?: string
+          discipler_id?: string
+          id?: string
+          observations?: string | null
+          prayer_requests?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "discipleship_notes_disciple_id_fkey"
+            columns: ["disciple_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discipleship_notes_discipler_id_fkey"
+            columns: ["discipler_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_meetings: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          discipler_id: string
+          duration: number | null
+          id: string
+          meeting_date: string | null
+          name: string
+          theme: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          discipler_id: string
+          duration?: number | null
+          id?: string
+          meeting_date?: string | null
+          name: string
+          theme?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          discipler_id?: string
+          duration?: number | null
+          id?: string
+          meeting_date?: string | null
+          name?: string
+          theme?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_meetings_discipler_id_fkey"
+            columns: ["discipler_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_members: {
+        Row: {
+          disciple_id: string
+          group_meeting_id: string
+          id: string
+          joined_at: string | null
+        }
+        Insert: {
+          disciple_id: string
+          group_meeting_id: string
+          id?: string
+          joined_at?: string | null
+        }
+        Update: {
+          disciple_id?: string
+          group_meeting_id?: string
+          id?: string
+          joined_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_members_disciple_id_fkey"
+            columns: ["disciple_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_members_group_meeting_id_fkey"
+            columns: ["group_meeting_id"]
+            isOneToOne: false
+            referencedRelation: "group_meetings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meeting_attendance: {
+        Row: {
+          created_at: string | null
+          disciple_id: string
+          group_meeting_id: string
+          id: string
+          notes: string | null
+          present: boolean
+        }
+        Insert: {
+          created_at?: string | null
+          disciple_id: string
+          group_meeting_id: string
+          id?: string
+          notes?: string | null
+          present?: boolean
+        }
+        Update: {
+          created_at?: string | null
+          disciple_id?: string
+          group_meeting_id?: string
+          id?: string
+          notes?: string | null
+          present?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meeting_attendance_disciple_id_fkey"
+            columns: ["disciple_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meeting_attendance_group_meeting_id_fkey"
+            columns: ["group_meeting_id"]
+            isOneToOne: false
+            referencedRelation: "group_meetings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meeting_reports: {
+        Row: {
+          content: string
+          created_at: string | null
+          discipler_id: string
+          id: string
+          meeting_date: string
+          meeting_type: string
+          participants_count: number | null
+          photo_url: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          discipler_id: string
+          id?: string
+          meeting_date: string
+          meeting_type: string
+          participants_count?: number | null
+          photo_url?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          discipler_id?: string
+          id?: string
+          meeting_date?: string
+          meeting_type?: string
+          participants_count?: number | null
+          photo_url?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meeting_reports_discipler_id_fkey"
+            columns: ["discipler_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          discipler_id: string | null
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          role: string
+          spiritual_stage: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          discipler_id?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          role?: string
+          spiritual_stage?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          discipler_id?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          role?: string
+          spiritual_stage?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_discipler_id_fkey"
+            columns: ["discipler_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_current_user_profile_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
