@@ -30,7 +30,7 @@ const Welcome = () => {
         <Card className="p-6 space-y-4 shadow-glow border-0">
           <Button 
             className="w-full bg-primary hover:bg-primary/90 text-white h-12 text-base font-medium"
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/auth')}
           >
             <Users className="w-5 h-5 mr-2" />
             Entrar
@@ -40,7 +40,7 @@ const Welcome = () => {
           <Button 
             variant="outline" 
             className="w-full border-primary text-primary hover:bg-primary hover:text-white h-12 text-base font-medium"
-            onClick={() => navigate('/register')}
+            onClick={() => navigate('/auth')}
           >
             <User className="w-5 h-5 mr-2" />
             Cadastrar-se
