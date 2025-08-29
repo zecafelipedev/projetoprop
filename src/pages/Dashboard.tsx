@@ -1,39 +1,15 @@
-import React, { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Navigation } from "@/components/Navigation";
 import { EventCard } from "@/components/EventCard";
 import { Button } from "@/components/ui/button";
-import { Star, Zap, Users, Calendar, Crown } from "lucide-react";
+import { Star, Zap, Users, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
 
 const Dashboard = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { user, profile, loading } = useAuth();
-
-  // Redirect to auth if not authenticated
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate('/auth');
-    }
-  }, [user, loading, navigate]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>Carregando...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user || !profile) {
-    return null;
-  }
+  const userName = "João"; // Simulado - virá do Supabase
 
   const handleCheckin = () => {
     toast({
@@ -55,17 +31,10 @@ const Dashboard = () => {
       <div className="bg-secondary text-secondary-foreground p-6 pb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">Olá, {profile.name}!</h1>
+            <h1 className="text-2xl font-bold">Olá, {userName}!</h1>
             <p className="text-secondary-foreground/80 mt-1">
-              {profile.role === 'master' ? 'Bem-vindo, Master!' : profile.role === 'discipler' ? 'Como estão seus discípulos?' : 'Que bom ter você aqui hoje'}
+              Que bom ter você aqui hoje
             </p>
-            {profile.role !== 'disciple' && (
-              <div className="mt-1">
-                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-white/20 text-white">
-                  {profile.role === 'master' ? 'Master' : 'Discipulador'}
-                </span>
-              </div>
-            )}
           </div>
           <div className="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1">
             <Star className="w-4 h-4 text-yellow-400" />
@@ -139,56 +108,36 @@ const Dashboard = () => {
           </Button>
         </div>
 
-        {/* Master Dashboard Access */}
-        {profile.role === 'master' && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-foreground">Administração</h2>
+        {/* Gestão e Organização */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-foreground">Gestão</h2>
+          
+          <div className="grid grid-cols-1 gap-3">
             <Button 
               variant="outline"
-              className="h-16 w-full flex items-center justify-start gap-3 px-4 border-purple-600/20 text-purple-600 hover:bg-purple-600 hover:text-white"
-              onClick={() => navigate('/master-dashboard')}
+              className="h-16 flex items-center justify-start gap-3 px-4 border-orange-600/20 text-orange-600 hover:bg-orange-600 hover:text-white"
+              onClick={() => navigate('/gestao-discipulos')}
             >
-              <Crown className="w-5 h-5" />
+              <Users className="w-5 h-5" />
               <div className="text-left">
-                <div className="font-medium">Painel Master</div>
-                <div className="text-sm opacity-80">Gerenciar discipuladores e atribuições</div>
+                <div className="font-medium">Gestão de Discípulos</div>
+                <div className="text-sm opacity-80">Cadastrar e acompanhar discípulos</div>
+              </div>
+            </Button>
+            
+            <Button 
+              variant="outline"
+              className="h-16 flex items-center justify-start gap-3 px-4 border-blue-600/20 text-blue-600 hover:bg-blue-600 hover:text-white"
+              onClick={() => navigate('/reuniao-grupo')}
+            >
+              <Calendar className="w-5 h-5" />
+              <div className="text-left">
+                <div className="font-medium">Reuniões em Grupo</div>
+                <div className="text-sm opacity-80">Agendar e editar temas</div>
               </div>
             </Button>
           </div>
-        )}
-
-        {/* Gestão e Organização - Only for disciplers and master */}
-        {(profile.role === 'discipler' || profile.role === 'master') && (
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-foreground">Gestão</h2>
-            
-            <div className="grid grid-cols-1 gap-3">
-              <Button 
-                variant="outline"
-                className="h-16 flex items-center justify-start gap-3 px-4 border-orange-600/20 text-orange-600 hover:bg-orange-600 hover:text-white"
-                onClick={() => navigate('/gestao-discipulos')}
-              >
-                <Users className="w-5 h-5" />
-                <div className="text-left">
-                  <div className="font-medium">Gestão de Discípulos</div>
-                  <div className="text-sm opacity-80">Cadastrar e acompanhar discípulos</div>
-                </div>
-              </Button>
-              
-              <Button 
-                variant="outline"
-                className="h-16 flex items-center justify-start gap-3 px-4 border-blue-600/20 text-blue-600 hover:bg-blue-600 hover:text-white"
-                onClick={() => navigate('/reuniao-grupo')}
-              >
-                <Calendar className="w-5 h-5" />
-                <div className="text-left">
-                  <div className="font-medium">Reuniões em Grupo</div>
-                  <div className="text-sm opacity-80">Agendar e editar temas</div>
-                </div>
-              </Button>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
 
       <Navigation />

@@ -3,12 +3,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./hooks/useAuth";
-import { ProtectedRoute } from "./components/ProtectedRoute";
 import Welcome from "./pages/Welcome";
-import AuthPage from "./pages/AuthPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import MasterDashboard from "./pages/MasterDashboard";
 import Devocional from "./pages/Devocional";
 import Oracao from "./pages/Oracao";
 import Checkin from "./pages/Checkin";
@@ -28,69 +26,23 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/master-dashboard" element={
-              <ProtectedRoute requiredRole="master">
-                <MasterDashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/devocional" element={
-              <ProtectedRoute>
-                <Devocional />
-              </ProtectedRoute>
-            } />
-            <Route path="/oracao" element={
-              <ProtectedRoute>
-                <Oracao />
-              </ProtectedRoute>
-            } />
-            <Route path="/checkin" element={
-              <ProtectedRoute>
-                <Checkin />
-              </ProtectedRoute>
-            } />
-            <Route path="/agenda-discipulos" element={
-              <ProtectedRoute>
-                <AgendaDiscipulos />
-              </ProtectedRoute>
-            } />
-            <Route path="/gestao-discipulos" element={
-              <ProtectedRoute requiredRole="discipler">
-                <GestaoDiscipulos />
-              </ProtectedRoute>
-            } />
-            <Route path="/reuniao-grupo" element={
-              <ProtectedRoute requiredRole="discipler">
-                <ReuniaoGrupo />
-              </ProtectedRoute>
-            } />
-            <Route path="/diario" element={
-              <ProtectedRoute>
-                <Diario />
-              </ProtectedRoute>
-            } />
-            <Route path="/trilhas" element={
-              <ProtectedRoute>
-                <Trilhas />
-              </ProtectedRoute>
-            } />
-            <Route path="/profile" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AuthProvider>
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/devocional" element={<Devocional />} />
+          <Route path="/oracao" element={<Oracao />} />
+          <Route path="/checkin" element={<Checkin />} />
+          <Route path="/agenda-discipulos" element={<AgendaDiscipulos />} />
+          <Route path="/gestao-discipulos" element={<GestaoDiscipulos />} />
+          <Route path="/reuniao-grupo" element={<ReuniaoGrupo />} />
+          <Route path="/diario" element={<Diario />} />
+          <Route path="/trilhas" element={<Trilhas />} />
+          <Route path="/profile" element={<Profile />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
