@@ -1,26 +1,65 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AppLogo } from "@/components/AppLogo";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { signIn, user } = useAuth();
+  const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
-  const handleLogin = async () => {
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user) {
+      const from = location.state?.from?.pathname || '/dashboard';
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, location]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      toast({
+        title: "Campos obrigatórios",
+        description: "Por favor, preencha email e senha.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
-    // Simular login
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate('/dashboard');
-    }, 1500);
+    const { error } = await signIn(email, password);
+    
+    if (error) {
+      toast({
+        title: "Erro no login",
+        description: error,
+        variant: "destructive",
+      });
+    }
+    
+    setIsLoading(false);
+  };
+
+  const handleForgotPassword = () => {
+    setShowForgotPassword(true);
+    toast({
+      title: "Recuperação de senha",
+      description: "Funcionalidade em desenvolvimento. Entre em contato com o suporte.",
+    });
   };
 
   return (
@@ -111,6 +150,7 @@ const Login = () => {
               <Button 
                 variant="link" 
                 className="text-primary p-0 h-auto text-sm"
+                onClick={handleForgotPassword}
               >
                 Esqueceu a senha?
               </Button>
@@ -118,6 +158,7 @@ const Login = () => {
 
             {/* Login Button */}
             <Button 
+              type="submit"
               className="w-full h-12 text-base font-medium" 
               onClick={handleLogin}
               disabled={!email || !password || isLoading}

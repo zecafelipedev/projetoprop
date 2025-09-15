@@ -283,6 +283,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_current_user_discipler_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       get_current_user_profile_id: {
         Args: Record<PropertyKey, never>
         Returns: string

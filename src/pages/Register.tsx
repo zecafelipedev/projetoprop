@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,9 +7,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { AppLogo } from "@/components/AppLogo";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, User, Mail, Lock, Eye, EyeOff, Church } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { signUp, user } = useAuth();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,18 +26,52 @@ const Register = () => {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleRegister = async () => {
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [user, navigate]);
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
     if (formData.password !== formData.confirmPassword) {
-      alert("As senhas não coincidem");
+      toast({
+        title: "Senhas não coincidem",
+        description: "Por favor, verifique se as senhas são iguais.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!acceptTerms) {
+      toast({
+        title: "Termos de uso",
+        description: "É necessário aceitar os termos de uso para continuar.",
+        variant: "destructive",
+      });
       return;
     }
     
     setIsLoading(true);
-    // Simular cadastro
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate('/dashboard');
-    }, 2000);
+    const { error } = await signUp(formData.email, formData.password, formData.name);
+    
+    if (error) {
+      toast({
+        title: "Erro no cadastro",
+        description: error,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Conta criada!",
+        description: "Verifique seu email para confirmar a conta.",
+      });
+      navigate('/login');
+    }
+    
+    setIsLoading(false);
   };
 
   const updateField = (field: string, value: string) => {
@@ -218,6 +256,7 @@ const Register = () => {
 
             {/* Register Button */}
             <Button 
+              type="submit"
               className="w-full h-12 text-base font-medium mt-6" 
               onClick={handleRegister}
               disabled={!isFormValid || isLoading}
