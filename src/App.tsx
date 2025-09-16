@@ -19,6 +19,9 @@ import Diario from "./pages/Diario";
 import Trilhas from "./pages/Trilhas";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import MasterAdmin from "./pages/MasterAdmin";
+import MeetingReport from "./pages/MeetingReport";
+import AttendanceControl from "./pages/AttendanceControl";
 
 const queryClient = new QueryClient();
 
@@ -81,6 +84,21 @@ const App = () => (
             <Route path="/profile" element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/master-admin" element={
+              <ProtectedRoute>
+                <MasterAdmin />
+              </ProtectedRoute>
+            } />
+            <Route path="/meeting-report" element={
+              <ProtectedRoute>
+                <MeetingReport />
+              </ProtectedRoute>
+            } />
+            <Route path="/attendance-control" element={
+              <ProtectedRoute>
+                <AttendanceControl />
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

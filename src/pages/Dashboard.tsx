@@ -2,14 +2,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Navigation } from "@/components/Navigation";
 import { EventCard } from "@/components/EventCard";
 import { Button } from "@/components/ui/button";
-import { Star, Zap, Users, Calendar } from "lucide-react";
+import { Star, Zap, Users, Calendar, Settings, Camera, UserCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Dashboard = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const userName = "João"; // Simulado - virá do Supabase
+  const { userProfile } = useAuth();
+  const userName = userProfile?.name || "Usuário";
+  const userRole = userProfile?.role || "disciple";
 
   const handleCheckin = () => {
     toast({
@@ -108,36 +111,81 @@ const Dashboard = () => {
           </Button>
         </div>
 
-        {/* Gestão e Organização */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Gestão</h2>
-          
-          <div className="grid grid-cols-1 gap-3">
-            <Button 
-              variant="outline"
-              className="h-16 flex items-center justify-start gap-3 px-4 border-orange-600/20 text-orange-600 hover:bg-orange-600 hover:text-white"
-              onClick={() => navigate('/gestao-discipulos')}
-            >
-              <Users className="w-5 h-5" />
-              <div className="text-left">
-                <div className="font-medium">Gestão de Discípulos</div>
-                <div className="text-sm opacity-80">Cadastrar e acompanhar discípulos</div>
-              </div>
-            </Button>
+        {/* Administração Master */}
+        {userRole === 'master' && (
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-foreground">Administração Master</h2>
             
             <Button 
               variant="outline"
-              className="h-16 flex items-center justify-start gap-3 px-4 border-blue-600/20 text-blue-600 hover:bg-blue-600 hover:text-white"
-              onClick={() => navigate('/reuniao-grupo')}
+              className="w-full h-16 flex items-center justify-start gap-3 px-4 border-red-600/20 text-red-600 hover:bg-red-600 hover:text-white"
+              onClick={() => navigate('/master-admin')}
             >
-              <Calendar className="w-5 h-5" />
+              <Settings className="w-5 h-5" />
               <div className="text-left">
-                <div className="font-medium">Reuniões em Grupo</div>
-                <div className="text-sm opacity-80">Agendar e editar temas</div>
+                <div className="font-medium">Administração Geral</div>
+                <div className="text-sm opacity-80">Gerencie usuários e atribuições</div>
               </div>
             </Button>
           </div>
-        </div>
+        )}
+
+        {/* Gestão e Organização */}
+        {(userRole === 'discipler' || userRole === 'master') && (
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-foreground">Gestão</h2>
+            
+            <div className="grid grid-cols-1 gap-3">
+              <Button 
+                variant="outline"
+                className="h-16 flex items-center justify-start gap-3 px-4 border-orange-600/20 text-orange-600 hover:bg-orange-600 hover:text-white"
+                onClick={() => navigate('/gestao-discipulos')}
+              >
+                <Users className="w-5 h-5" />
+                <div className="text-left">
+                  <div className="font-medium">Gestão de Discípulos</div>
+                  <div className="text-sm opacity-80">Cadastrar e acompanhar discípulos</div>
+                </div>
+              </Button>
+              
+              <Button 
+                variant="outline"
+                className="h-16 flex items-center justify-start gap-3 px-4 border-blue-600/20 text-blue-600 hover:bg-blue-600 hover:text-white"
+                onClick={() => navigate('/reuniao-grupo')}
+              >
+                <Calendar className="w-5 h-5" />
+                <div className="text-left">
+                  <div className="font-medium">Reuniões em Grupo</div>
+                  <div className="text-sm opacity-80">Agendar e editar temas</div>
+                </div>
+              </Button>
+
+              <Button 
+                variant="outline"
+                className="h-16 flex items-center justify-start gap-3 px-4 border-green-600/20 text-green-600 hover:bg-green-600 hover:text-white"
+                onClick={() => navigate('/meeting-report')}
+              >
+                <Camera className="w-5 h-5" />
+                <div className="text-left">
+                  <div className="font-medium">Relatórios de Reunião</div>
+                  <div className="text-sm opacity-80">Registre reuniões com fotos</div>
+                </div>
+              </Button>
+
+              <Button 
+                variant="outline"
+                className="h-16 flex items-center justify-start gap-3 px-4 border-purple-600/20 text-purple-600 hover:bg-purple-600 hover:text-white"
+                onClick={() => navigate('/attendance-control')}
+              >
+                <UserCheck className="w-5 h-5" />
+                <div className="text-left">
+                  <div className="font-medium">Controle de Presença</div>
+                  <div className="text-sm opacity-80">Gerencie frequência dos PGs</div>
+                </div>
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
 
       <Navigation />

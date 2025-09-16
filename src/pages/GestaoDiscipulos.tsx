@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Navigation } from "@/components/Navigation";
-import { ArrowLeft, Plus, Search, Phone, MessageCircle, Calendar, User } from "lucide-react";
+import { DiscipleNotes } from "@/components/DiscipleNotes";
+import { ArrowLeft, Plus, Search, Phone, MessageCircle, Calendar, User, NotebookPen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const GestaoDiscipulos = () => {
   const navigate = useNavigate();
