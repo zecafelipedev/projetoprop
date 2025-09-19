@@ -98,7 +98,8 @@ const GestaoDiscipulos = () => {
           email: newDisciple.email || null,
           spiritual_stage: newDisciple.spiritualStage || null,
           role: 'disciple',
-          discipler_id: profile.id
+          discipler_id: profile.id,
+          user_id: crypto.randomUUID() // Generate placeholder UUID for disciples without auth accounts
         }]);
 
       if (error) throw error;
