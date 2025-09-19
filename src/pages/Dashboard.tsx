@@ -10,9 +10,24 @@ import { useAuth } from "@/contexts/AuthContext";
 const Dashboard = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { userProfile } = useAuth();
-  const userName = userProfile?.name || "Usuário";
+  const { userProfile, loading, user } = useAuth();
+  
+  console.log('Dashboard render - userProfile:', userProfile, 'loading:', loading, 'user:', user?.id);
+  
+  const userName = userProfile?.name || user?.email || "Usuário";
   const userRole = userProfile?.role || "disciple";
+
+  // Show loading state while profile is being fetched
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p>Carregando dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleCheckin = () => {
     toast({

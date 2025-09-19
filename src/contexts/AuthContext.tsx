@@ -31,14 +31,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUserProfile = async (userId: string) => {
     try {
+      console.log('Fetching profile for user:', userId);
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle(); // Use maybeSingle() instead of single() to handle no results
 
-      if (error) throw error;
-      setUserProfile(data);
+      if (error) {
+        console.error('Profile fetch error:', error);
+        setUserProfile(null);
+        return;
+      }
+
+      if (data) {
+        console.log('Profile found:', data);
+        setUserProfile(data);
+      } else {
+        console.log('No profile found for user, this is normal for new users');
+        setUserProfile(null);
+      }
     } catch (error) {
       console.error('Error fetching user profile:', error);
       setUserProfile(null);
@@ -49,13 +61,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.id);
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
+          // Use setTimeout to prevent potential deadlock in auth state change
           setTimeout(() => {
             fetchUserProfile(session.user.id);
-          }, 0);
+          }, 100);
         } else {
           setUserProfile(null);
         }
@@ -66,14 +80,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session check:', session?.user?.id);
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
         fetchUserProfile(session.user.id);
+      } else {
+        setLoading(false);
       }
-      
-      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
